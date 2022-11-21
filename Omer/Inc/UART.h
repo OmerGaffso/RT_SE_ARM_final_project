@@ -38,7 +38,7 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data);
  * @param transmit_buff - the data to transmit
  * @param receive_buff - the data to receive
  */
-void i2c_tran_rec(	UART_HandleTypeDef *uart_transmit,
+void uart_tran_rec(	UART_HandleTypeDef *uart_transmit,
 					UART_HandleTypeDef *uart_receive,
 					uint8_t data_length,
 					uint8_t *transmit_buff,

@@ -5,18 +5,37 @@
 #ifndef RTG_ARM_PROJECT_SPI
 #define RTG_ARM_PROJECT_SPI
 
-#include "RTG.h"
-
-// SPI HANDLES:
+/// Extern SPI HANDLES
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi4;
 
-// SPI
+/// SPI handles
 #define SPI_1 &hspi1					//SPI Master
-#define SPI_2 &hspi4					//SPI Slave
+#define SPI_4 &hspi4					//SPI Slave
 
+/**
+ * This is the main function for the SPI testing.
+ * The data received from server will be received initially by SPI1, transmit
+ * to SPI4, and then transmit back to SPI1 to check if the data is the same.
+ * @param iter - number of iteration for the test
+ * @param data_length - the length of string to transmit and receive
+ * @param data - the string data to transmit and receive
+ * @return 0x01 if the tests passed successfully, or 0xff if tests failed.
+ */
+uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data);
 
-
-
+/**
+ * This function will transmit data between SPI to SPI.
+ * @param spi_transmit - the SPI peripheral to transmit the data
+ * @param spi_receive - the SPI peripheral to receive the data
+ * @param data_length - the length of the string
+ * @param transmit_buff - the buffer from which we'll transmit the data
+ * @param receive_buff - the buffer which we'll receive the data into
+ */
+void spi_tran_rec(	SPI_HandleTypeDef *spi_transmit,
+					SPI_HandleTypeDef *spi_receive,
+					uint8_t data_length,
+					uint8_t *transmit_buff,
+					uint8_t *receive_buff );
 
 #endif

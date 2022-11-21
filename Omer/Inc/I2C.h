@@ -30,21 +30,29 @@ uint8_t i2c_test(uint8_t iter, uint8_t data_length, uint8_t *data);
 
 /**
  * This function will send the data from I2C master to I2C slave.
+ * @param i2c_transmit - the I2C peripheral to transmit the data
+ * @param i2c_receive - the I2C peripheral to receive the data
  * @param data_length - the length of the string
  * @param transmit_buff - the buffer from which we'll transmit the data
  * @param receive_buff - the buffer which we'll receive the data into
  */
-void i2c_tran_to_slave(	uint8_t data_length,
+void i2c_tran_to_slave(	I2C_HandleTypeDef *i2c_transmit,
+						I2C_HandleTypeDef *i2c_receive,
+						uint8_t data_length,
 						uint8_t *transmit_buff,
 						uint8_t *receive_buff );
 
 /**
  * This function will send the data from I2C slave to I2C master.
+ * @param i2c_transmit - the I2C peripheral to transmit the data
+ * @param i2c_receive - the I2C peripheral to receive the data
  * @param data_length - the length of the string
  * @param transmit_buff - the buffer from which we'll transmit the data
  * @param receive_buff - the buffer which we'll receive the data into
  */
-void i2c_tran_to_master(	uint8_t data_length,
+void i2c_tran_to_master(	I2C_HandleTypeDef *i2c_transmit,
+							I2C_HandleTypeDef *i2c_receive,
+							uint8_t data_length,
 							uint8_t *transmit_buff,
 							uint8_t *receive_buff );
 

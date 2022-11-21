@@ -5,10 +5,6 @@
  * This is the main function for the UART testing.
  * The data received from server will be received initially by UART4, transmit
  * to UART2, and then transmit back to UART4 to check if the data is the same.
- * @param iter - number of iteration for the test
- * @param data_length - the length of string to transmit and receive
- * @param data - the string data to transmit and receive
- * @return 0x01 if the tests passed successfully, or 0xff if tests failed.
  */
 uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
