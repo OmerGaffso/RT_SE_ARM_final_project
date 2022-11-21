@@ -76,12 +76,6 @@ void rtg_main()
 	}
 }
 
-// Enters here upon completed uart receive.
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	if (huart == UART_RECEIVE)
-		HAL_UART_Receive_DMA(UART_RECEIVE, rx_uart_data, DATA_SIZE);}
-
 // Enters here upon completed i2c receive.
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c)
 {

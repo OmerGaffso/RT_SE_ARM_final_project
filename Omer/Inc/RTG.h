@@ -42,34 +42,6 @@
 #include <string.h>
 #include <ctype.h>
 
-// UART HANDLES:
-extern UART_HandleTypeDef huart3;
-extern UART_HandleTypeDef huart2;
-extern UART_HandleTypeDef huart4;
-
-// I2C HANDLES:
-extern I2C_HandleTypeDef hi2c2;
-extern I2C_HandleTypeDef hi2c4;
-
-// SPI HANDLES:
-extern SPI_HandleTypeDef hspi1;
-extern SPI_HandleTypeDef hspi4;
-
-// DEFINITIONS:
-// UART
-#define UART_DEBUG &huart3				//Debug UART
-#define UART_2 &huart2					//UART2 Handle
-#define UART_4 &huart4					//UART2 Handle
-
-// I2C
-#define I2C_2 &hi2c2					//I2C Master
-#define I2C_4 &hi2c4					//I2C Slave
-#define SLAVE_ADDR 44					//Slave address
-
-// SPI
-#define SPI_1 &hspi1					//SPI Master
-#define SPI_2 &hspi4					//SPI Slave
-
 // TIMER
 #define TIMER &htim3
 
@@ -101,36 +73,36 @@ extern SPI_HandleTypeDef hspi4;
 // when making changes on the .ioc file.
 void rtg_main();
 
-// turns off all the LEDs.
+/// turns off all the LEDs.
 void turn_off_leds();
 
-// turns on all the LEDs.
+/// turns on all the LEDs.
 void turn_on_leds();
 
-// toggle the LED states
+/// toggle the LED states
 void toggle_leds();
 
-// helper function that switch the current operation flag to the next
+/// helper function that switch the current operation flag to the next
 void switch_op();
 
-// helper function. receives 1 or 0 for every led and switching it on or off
-// based on the values of the parameters.
+/// helper function. receives 1 or 0 for every led and switching it on or off
+/// based on the values of the parameters.
 void leds(int green, int blue, int red);
 
-// helper function that prints the message.
+/// helper function that prints the message.
 void print_msg();
 
-// helper function that checks the transmit and received message flags.
-// returns true if both flags are true, and false otherwise.
+/// helper function that checks the transmit and received message flags.
+/// returns true if both flags are true, and false otherwise.
 int check_msg_flags();
 
-// helper function that calls i2c master transmit dma and i2c slave receive dma.
+/// helper function that calls i2c master transmit dma and i2c slave receive dma.
 void i2c_transmit_receive();
 
-// helper function that calls uart receive dma and uart transmit dma.
+/// helper function that calls uart receive dma and uart transmit dma.
 void uart_transmit_receive();
 
-// helper function that calls spi receive dma and spi transmit dma.
+/// helper function that calls spi receive dma and spi transmit dma.
 void spi_transmit_receive();
 
 /**
