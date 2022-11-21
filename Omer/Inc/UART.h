@@ -7,17 +7,12 @@
 #define RTG_ARM_PROJECT_UART
 
 /// Extern UART Handles
-extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart4;
 
 /// UART handles
-#define UART_DEBUG &huart3				//Debug UART
 #define UART_2 &huart2					//UART2 Handle
 #define UART_4 &huart4					//UART2 Handle
-
-#define RETURN_SUCCESS 0x01				//The test ended successfully
-#define RETURN_FAILURE 0xff				//The test ended in failure
 
 /**
  * This is the main function for the UART testing.
@@ -38,14 +33,22 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data);
  * @param transmit_buff - the data to transmit
  * @param receive_buff - the data to receive
  */
-void uart_tran_rec(	UART_HandleTypeDef *uart_transmit,
-					UART_HandleTypeDef *uart_receive,
-					uint8_t data_length,
-					uint8_t *transmit_buff,
-					uint8_t *receive_buff )
-{
-	HAL_UART_Receive_DMA(uart_receive, receive_buff, data_length);
-	HAL_UART_Transmit_DMA(uart_transmit, transmit_buff, data_length);
-}
+void uart_transmit_receive(	UART_HandleTypeDef *uart_transmit,
+							UART_HandleTypeDef *uart_receive,
+							uint8_t data_length,
+							uint8_t *transmit_buff,
+							uint8_t *receive_buff );
+
+/**
+ *  Uses while loop to delay the program until enters HAL_UART_TxCpltCallback
+ *  and changes tx_done_flag to true (indicates that the transmit was completed)
+ */
+void uart_delay_till_transmited();
+
+/**
+ *  Uses while loop to delay the program until enters HAL_UART_RxCpltCallback
+ *  and changes rx_done_flag to true (indicates that the receive was completed)
+ */
+void uart_delay_till_received();
 
 #endif

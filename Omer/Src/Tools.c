@@ -35,24 +35,24 @@ int _read(int file, char *ptr, int len)
 	return 1;
 }
 
-void print_msg()
-{
-	if (uart_flag)
-	{
-		uart_cnt++;
-		printf("%d) %s",uart_cnt, rx_uart_data);
-	}
-	else if (i2c_flag)
-	{
-		i2c_cnt++;
-		printf("%d) %s",i2c_cnt ,rx_i2c_data);
-	}
-	else if (spi_flag)
-	{
-		spi_cnt++;
-		printf("%d) %s", spi_cnt ,rx_spi_data);
-	}
-}
+//void print_msg()
+//{
+//	if (uart_flag)
+//	{
+//		uart_cnt++;
+//		printf("%d) %s",uart_cnt, rx_uart_data);
+//	}
+//	else if (i2c_flag)
+//	{
+//		i2c_cnt++;
+//		printf("%d) %s",i2c_cnt ,rx_i2c_data);
+//	}
+//	else if (spi_flag)
+//	{
+//		spi_cnt++;
+//		printf("%d) %s", spi_cnt ,rx_spi_data);
+//	}
+//}
 
 void print_separator()
 {

@@ -327,9 +327,8 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     PE2     ------> SPI4_SCK
     PE4     ------> SPI4_NSS
     PE5     ------> SPI4_MISO
-    PE6     ------> SPI4_MOSI
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6;
+    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -431,9 +430,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     PE2     ------> SPI4_SCK
     PE4     ------> SPI4_NSS
     PE5     ------> SPI4_MISO
-    PE6     ------> SPI4_MOSI
     */
-    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6);
+    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5);
 
     /* SPI4 DMA DeInit */
     HAL_DMA_DeInit(hspi->hdmarx);

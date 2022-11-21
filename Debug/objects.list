@@ -28,5 +28,8 @@
 "./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o"
 "./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.o"
 "./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_usb.o"
+"./Omer/Src/I2C.o"
 "./Omer/Src/RTG.o"
+"./Omer/Src/SPI.o"
 "./Omer/Src/Tools.o"
+"./Omer/Src/UART.o"

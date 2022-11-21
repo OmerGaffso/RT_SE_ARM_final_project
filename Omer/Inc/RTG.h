@@ -42,6 +42,10 @@
 #include <string.h>
 #include <ctype.h>
 
+// DEBUG UART
+extern UART_HandleTypeDef huart3;
+#define UART_DEBUG &huart3				//Debug UART
+
 // TIMER
 #define TIMER &htim3
 
@@ -55,7 +59,8 @@
 #define GPIO_PIN_DOWN 0					//To set the led down
 
 // GENERAL DEFINITIONS:
-#define DATA_SIZE 20					//Size of data for transmission
+//Max size of data for UDP received string
+#define DATA_SIZE 255
 #define TIMEOUT_TIME 100				//Timeout for UART TRANSMIT
 #define DELAY_TIME 500					//Delay time for end of loop
 #define INIT_VALUE 0					//Initiation value for counters and pin connected flag
@@ -66,6 +71,10 @@
 // BOOLS:
 #define TRUE 1
 #define FALSE 0
+
+// TEST_RETURNS:
+#define RETURN_SUCCESS 0x01				//The test ended successfully
+#define RETURN_FAILURE 0xff				//The test ended in failure
 
 // FUNCTIONS:
 
@@ -95,20 +104,6 @@ void print_msg();
 /// helper function that checks the transmit and received message flags.
 /// returns true if both flags are true, and false otherwise.
 int check_msg_flags();
-
-/// helper function that calls i2c master transmit dma and i2c slave receive dma.
-void i2c_transmit_receive();
-
-/// helper function that calls uart receive dma and uart transmit dma.
-void uart_transmit_receive();
-
-/// helper function that calls spi receive dma and spi transmit dma.
-void spi_transmit_receive();
-
-/**
- * Initiates UART, I2C and SPI receive
- */
-void init_receive();
 
 /**
  * Helper function that prints a separator.

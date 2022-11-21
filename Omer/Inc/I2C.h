@@ -36,11 +36,11 @@ uint8_t i2c_test(uint8_t iter, uint8_t data_length, uint8_t *data);
  * @param transmit_buff - the buffer from which we'll transmit the data
  * @param receive_buff - the buffer which we'll receive the data into
  */
-void i2c_tran_to_slave(	I2C_HandleTypeDef *i2c_transmit,
-						I2C_HandleTypeDef *i2c_receive,
-						uint8_t data_length,
-						uint8_t *transmit_buff,
-						uint8_t *receive_buff );
+void i2c_transmit_to_slave(	I2C_HandleTypeDef *i2c_transmit,
+							I2C_HandleTypeDef *i2c_receive,
+							uint8_t data_length,
+							uint8_t *transmit_buff,
+							uint8_t *receive_buff );
 
 /**
  * This function will send the data from I2C slave to I2C master.
@@ -50,10 +50,22 @@ void i2c_tran_to_slave(	I2C_HandleTypeDef *i2c_transmit,
  * @param transmit_buff - the buffer from which we'll transmit the data
  * @param receive_buff - the buffer which we'll receive the data into
  */
-void i2c_tran_to_master(	I2C_HandleTypeDef *i2c_transmit,
-							I2C_HandleTypeDef *i2c_receive,
-							uint8_t data_length,
-							uint8_t *transmit_buff,
-							uint8_t *receive_buff );
+void i2c_transmit_to_master(	I2C_HandleTypeDef *i2c_transmit,
+								I2C_HandleTypeDef *i2c_receive,
+								uint8_t data_length,
+								uint8_t *transmit_buff,
+								uint8_t *receive_buff );
+
+/**
+ *  Uses while loop to delay the program until enters HAL_I2C_TxCpltCallback
+ *  and changes tx_done_flag to true (indicates that the transmit was completed)
+ */
+void i2c_delay_till_transmited();
+
+/**
+ *  Uses while loop to delay the program until enters HAL_I2C_RxCpltCallback
+ *  and changes rx_done_flag to true (indicates that the receive was completed)
+ */
+void i2c_delay_till_received();
 
 #endif

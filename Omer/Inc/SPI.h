@@ -32,10 +32,22 @@ uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data);
  * @param transmit_buff - the buffer from which we'll transmit the data
  * @param receive_buff - the buffer which we'll receive the data into
  */
-void spi_tran_rec(	SPI_HandleTypeDef *spi_transmit,
-					SPI_HandleTypeDef *spi_receive,
-					uint8_t data_length,
-					uint8_t *transmit_buff,
-					uint8_t *receive_buff );
+void spi_transmit_receive(	SPI_HandleTypeDef *spi_transmit,
+							SPI_HandleTypeDef *spi_receive,
+							uint8_t data_length,
+							uint8_t *transmit_buff,
+							uint8_t *receive_buff );
+
+/**
+ *  Uses while loop to delay the program until enters HAL_SPI_TxCpltCallback
+ *  and changes tx_done_flag to true (indicates that the transmit was completed)
+ */
+void spi_delay_till_transmited();
+
+/**
+ *  Uses while loop to delay the program until enters HAL_SPI_RxCpltCallback
+ *  and changes rx_done_flag to true (indicates that the receive was completed)
+ */
+void spi_delay_till_received();
 
 #endif
