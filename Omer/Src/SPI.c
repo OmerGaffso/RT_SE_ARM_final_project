@@ -4,7 +4,14 @@
 /// Flags to be used in call backs
 uint8_t spi_tx_done_flag = FALSE;		// Flag to notify complete transmit
 uint8_t spi_rx_done_flag = FALSE;		// Flag to notify complete received
+uint8_t spi_tx_rx_done_flag = FALSE;	// Flag to notify complete tx/rx
 
+/// Buffers
+uint8_t master_buff[DATA_SIZE] = { 0 }; 	// init the buffer to be full '\0'
+uint8_t rx_slave_buff[DATA_SIZE] = { 0 }; 	// init the buffer to be full '\0'
+uint8_t tx_slave_buff[DATA_SIZE] = { 0 };	// init the buffer to be full '\0'
+uint8_t origin_data[DATA_SIZE] = { 0 }; 	// buffer for the original data.
+uint8_t dummy_buff[DATA_SIZE] = { 0 };  	// dummy buffer that will stay '\0'
 /**
  * This is the main function for the SPI testing.
  * The data received from server will be received initially by SPI1, transmit
@@ -16,22 +23,21 @@ uint8_t spi_rx_done_flag = FALSE;		// Flag to notify complete received
  */
 uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
-	uint8_t spi1_buff[DATA_SIZE] = { 0 }; // init the buffer to be full '\0'
-	uint8_t spi4_buff[DATA_SIZE] = { 0 }; // init the buffer to be full '\0'
 	uint8_t result = RETURN_SUCCESS;
-
-	// Disable communication between SPI peripherals
-//	HAL_GPIO_WritePin(CS_MASTER_PER, CS_MASTER_PIN, GPIO_PIN_SET);
+	memcpy(origin_data, data, data_length);
 
 	for(uint8_t i = 0; i < iter ; i++)
 	{
-		spi_transmit_receive(SPI_MASTER, SPI_SLAVE, data_length, data, spi4_buff);
+		spi_init_receive(data_length);
+
+		spi_transmit_to_slave(SPI_MASTER, SPI_SLAVE, data_length);
 		spi_delay_till_received(); // delay until receive complete
 
-		spi_transmit_receive(SPI_SLAVE, SPI_MASTER, data_length, spi4_buff, spi1_buff);
-		spi_delay_till_received(); // delay until receive complete
+//		spi_init_receive(data_length);
 
-		if(strncmp((char *)spi1_buff, (char *)data, data_length) != 0)
+		spi_transmit_to_master(SPI_SLAVE, SPI_MASTER, data_length);
+
+		if(strncmp((char *)master_buff, (char *)data, data_length) != 0)
 		{
 			result = RETURN_FAILURE;
 			return result;
@@ -40,21 +46,52 @@ uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 	return result;
 }
 
-/**
- * This function will send the data from SPI to SPI.
- */
-void spi_transmit_receive(	SPI_HandleTypeDef *spi_transmit,
-							SPI_HandleTypeDef *spi_receive,
-							uint8_t data_length,
-							uint8_t *transmit_buff,
-							uint8_t *receive_buff )
+void spi_init_receive(int data_length) // TODO: accept buff parameters
 {
-	// Enable communication between SPI peripherals for transmitting/receiving
-//	HAL_GPIO_WritePin(CS_MASTER_PER, CS_MASTER_PIN, GPIO_PIN_RESET);
+	HAL_SPI_Receive_DMA(SPI_MASTER, master_buff, data_length);
+	HAL_SPI_Receive_DMA(SPI_SLAVE, rx_slave_buff, data_length);
+}
 
-	HAL_SPI_Receive_DMA(spi_receive, receive_buff, data_length);
-	HAL_SPI_Transmit_DMA(spi_transmit, transmit_buff, data_length);
+/**
+ * This function will send the data from SPI master to SPI slave.
+ */
+void spi_transmit_to_slave(	SPI_HandleTypeDef *spi_transmit,
+							SPI_HandleTypeDef *spi_receive,
+							uint8_t data_length)
+{
+
+//	HAL_SPI_Receive_DMA(spi_receive, receive_buff, data_length);
+	// transmit the original data to the slave.
+	HAL_SPI_Transmit_DMA(SPI_MASTER, origin_data, data_length);
+//	HAL_SPI_TransmitReceive_DMA(SPI_MASTER, origin_data, rx_slave_buff, data_length);
+//	HAL_SPI_TransmitReceive_IT(SPI_SLAVE, tx_slave_buff, master_buff, data_length);
 	spi_delay_till_transmited(); // delay until completed the transmit
+
+//	void spi_delay_till_tx_rx();
+}
+
+/**
+ * This function will send the data from SPI slave to SPI master.
+ */
+void spi_transmit_to_master(SPI_HandleTypeDef *spi_transmit,
+							SPI_HandleTypeDef *spi_receive,
+							uint8_t data_length)
+{
+	memcpy(tx_slave_buff, rx_slave_buff, data_length);
+
+//	HAL_SPI_TransmitReceive_DMA(SPI_MASTER, dummy_buff, rx_slave_buff, DATA_SIZE);
+//	HAL_SPI_TransmitReceive_DMA(SPI_SLAVE, tx_slave_buff, master_buff, data_length);
+//	spi_delay_till_tx_rx();
+
+	HAL_SPI_Transmit_DMA(SPI_SLAVE, tx_slave_buff, data_length);
+	HAL_SPI_Receive_DMA(SPI_MASTER, master_buff, data_length);
+//	HAL_SPI_Receive_DMA(SPI_SLAVE, dummy_buff, data_length);
+//	spi_init_receive(data_length);
+
+	HAL_SPI_Transmit_DMA(SPI_MASTER, dummy_buff, data_length);
+//	HAL_SPI_Transmit_DMA(SPI_MASTER, dummy_buff, data_length);
+//	spi_delay_till_transmited(); // delay until completed the transmit
+	spi_delay_till_received(); // delay until receive complete
 }
 
 /// Delay until enters HAL_SPI_TxCpltCallback changes flag to true
@@ -69,8 +106,14 @@ void spi_delay_till_received()
 {
 	while(spi_rx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases)
 	spi_rx_done_flag = FALSE;
-	// Disable communication between SPI peripherals after done receiving
-//	HAL_GPIO_WritePin(CS_MASTER_PER, CS_MASTER_PIN, GPIO_PIN_SET);
+}
+
+/// Delay until enters HAL_SPI_Rx_CpltCallback for master and slave to change
+/// the flag
+void spi_delay_till_tx_rx()
+{
+	while(spi_tx_rx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases)
+	spi_tx_rx_done_flag = FALSE;
 }
 
 /// Enters here upon complete SPI transmit
@@ -85,4 +128,23 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 {
 	if (hspi == SPI_MASTER || hspi == SPI_SLAVE)
 			spi_rx_done_flag = TRUE;
+}
+
+/// Enters here upon complete SPI receive
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+	static uint8_t master_done = FALSE;
+	static uint8_t slave_done = FALSE;
+
+	if (hspi == SPI_MASTER)
+		master_done = TRUE;
+	else if (hspi == SPI_SLAVE)
+		slave_done = TRUE;
+
+	if (master_done && slave_done)
+	{
+		spi_tx_rx_done_flag = TRUE;
+		master_done = FALSE;
+		slave_done = FALSE;
+	}
 }

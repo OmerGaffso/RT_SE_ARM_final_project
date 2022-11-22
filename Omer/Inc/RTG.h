@@ -13,24 +13,24 @@
  * SPI - Red LED
  *
  * ---UART---
- * UART2_TX	PD5
- * UART2_RX	PD6
  * UART4_TX PC10
  * UART4_RX PC11
+ * UART6_TX	PC6
+ * UART6_RX	PC7
  *
  * ---I2C---
+ * I2C1 - PB9 SDA , PB8 SCL
  * I2C2 - PB11 SDA , PB10 SCL
- * I2C4 - PD13 SDA , PD12 SCL
  *
  * ---SPI---
  * SPI1_SCK - PB3
  * SPI1_MOSI - PB5
  * SPI1_MISO - PB4
  * SPI1_CS - PA4
- * SPI4_SCK - PE2
- * SPI4_MOSI - PE6
- * SPI4_MISO - PE5
- * SPI4_CS - PE4
+ * SPI4_SCK - PE12
+ * SPI4_MOSI - PE14
+ * SPI4_MISO - PE13
+ * SPI4_CS - PE11
  *
  */
 #ifndef INC_RTG_H_

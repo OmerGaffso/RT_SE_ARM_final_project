@@ -13,9 +13,8 @@ extern SPI_HandleTypeDef hspi4;
 #define SPI_MASTER &hspi1					//SPI Master
 #define SPI_SLAVE &hspi4					//SPI Slave
 
-/// CS PIN
-#define CS_MASTER_PER GPIOA					//Master Peripheral
-#define CS_MASTER_PIN GPIO_PIN_4			//Master Pin Number
+#define CS_PER GPIOA						//CS configured to per A
+#define CS_PIN GPIO_PIN_4					//CS configured to pin 4
 
 /**
  * This is the main function for the SPI testing.
@@ -28,19 +27,31 @@ extern SPI_HandleTypeDef hspi4;
  */
 uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data);
 
+void spi_init_receive(int data_length); //TODO add desc
+
 /**
- * This function will transmit data between SPI to SPI.
+ * This function will transmit data form SPI master to SPI slave.
  * @param spi_transmit - the SPI peripheral to transmit the data
  * @param spi_receive - the SPI peripheral to receive the data
  * @param data_length - the length of the string
  * @param transmit_buff - the buffer from which we'll transmit the data
  * @param receive_buff - the buffer which we'll receive the data into
  */
-void spi_transmit_receive(	SPI_HandleTypeDef *spi_transmit,
+void spi_transmit_to_slave(	SPI_HandleTypeDef *spi_transmit,
 							SPI_HandleTypeDef *spi_receive,
-							uint8_t data_length,
-							uint8_t *transmit_buff,
-							uint8_t *receive_buff );
+							uint8_t data_length);
+
+/**
+ * This function will transmit data form SPI slave to SPI master.
+ * @param spi_transmit - the SPI peripheral to transmit the data
+ * @param spi_receive - the SPI peripheral to receive the data
+ * @param data_length - the length of the string
+ * @param transmit_buff - the buffer from which we'll transmit the data
+ * @param receive_buff - the buffer which we'll receive the data into
+ */
+void spi_transmit_to_master(SPI_HandleTypeDef *spi_transmit,
+							SPI_HandleTypeDef *spi_receive,
+							uint8_t data_length);
 
 /**
  *  Uses while loop to delay the program until enters HAL_SPI_TxCpltCallback
@@ -53,5 +64,8 @@ void spi_delay_till_transmited();
  *  and changes rx_done_flag to true (indicates that the receive was completed)
  */
 void spi_delay_till_received();
+
+void spi_delay_till_tx_rx();
+
 
 #endif
