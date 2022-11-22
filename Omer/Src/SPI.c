@@ -20,12 +20,15 @@ uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 	uint8_t spi4_buff[DATA_SIZE] = { 0 }; // init the buffer to be full '\0'
 	uint8_t result = RETURN_SUCCESS;
 
+	// Disable communication between SPI peripherals
+//	HAL_GPIO_WritePin(CS_MASTER_PER, CS_MASTER_PIN, GPIO_PIN_SET);
+
 	for(uint8_t i = 0; i < iter ; i++)
 	{
-		spi_transmit_receive(SPI_1, SPI_4, data_length, data, spi4_buff);
+		spi_transmit_receive(SPI_MASTER, SPI_SLAVE, data_length, data, spi4_buff);
 		spi_delay_till_received(); // delay until receive complete
 
-		spi_transmit_receive(SPI_4, SPI_1, data_length, spi4_buff, spi1_buff);
+		spi_transmit_receive(SPI_SLAVE, SPI_MASTER, data_length, spi4_buff, spi1_buff);
 		spi_delay_till_received(); // delay until receive complete
 
 		if(strncmp((char *)spi1_buff, (char *)data, data_length) != 0)
@@ -46,6 +49,9 @@ void spi_transmit_receive(	SPI_HandleTypeDef *spi_transmit,
 							uint8_t *transmit_buff,
 							uint8_t *receive_buff )
 {
+	// Enable communication between SPI peripherals for transmitting/receiving
+//	HAL_GPIO_WritePin(CS_MASTER_PER, CS_MASTER_PIN, GPIO_PIN_RESET);
+
 	HAL_SPI_Receive_DMA(spi_receive, receive_buff, data_length);
 	HAL_SPI_Transmit_DMA(spi_transmit, transmit_buff, data_length);
 	spi_delay_till_transmited(); // delay until completed the transmit
@@ -63,18 +69,20 @@ void spi_delay_till_received()
 {
 	while(spi_rx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases)
 	spi_rx_done_flag = FALSE;
+	// Disable communication between SPI peripherals after done receiving
+//	HAL_GPIO_WritePin(CS_MASTER_PER, CS_MASTER_PIN, GPIO_PIN_SET);
 }
 
 /// Enters here upon complete SPI transmit
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
 {
-	if (hspi == SPI_1 || hspi == SPI_4)
+	if (hspi == SPI_MASTER || hspi == SPI_SLAVE)
 		spi_tx_done_flag = TRUE;
 }
 
 /// Enters here upon complete SPI receive
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 {
-	if (hspi == SPI_1 || hspi == SPI_4)
+	if (hspi == SPI_MASTER || hspi == SPI_SLAVE)
 			spi_rx_done_flag = TRUE;
 }

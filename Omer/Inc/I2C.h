@@ -8,18 +8,18 @@
 #define RTG_ARM_PROJECT_I2C
 
 /// Extern I2C handles
+extern I2C_HandleTypeDef hi2c1;
 extern I2C_HandleTypeDef hi2c2;
-extern I2C_HandleTypeDef hi2c4;
 
 /// I2C handles
-#define I2C_2 &hi2c2					//I2C Master
-#define I2C_4 &hi2c4					//I2C Slave
-#define SLAVE_ADDR 44					//Slave address
+#define I2C_MASTER &hi2c2					//I2C Master
+#define I2C_SLAVE &hi2c1					//I2C Slave
+#define SLAVE_ADDR 44						//Slave address
 
 /**
  * This is the main function for the I2C testing.
  * The data received from server will be received initially by I2C2, transmit
- * to I2C4, and then transmit back to I2C2 to check if the data is the same.
+ * to I2C1, and then transmit back to I2C2 to check if the data is the same.
  * @param iter - number of iteration for the test
  * @param data_length - the length of string to transmit and receive
  * @param data - the string data to transmit and receive

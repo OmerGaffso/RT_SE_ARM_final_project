@@ -13,6 +13,7 @@ void rtg_main()
 		printf("Please enter a communication protocol name:(U/I/S)\r\n");
 		scanf("%c", &choice);
 		choice = tolower(choice);
+		new_line();
 
 		switch(choice)
 		{
@@ -30,11 +31,9 @@ void rtg_main()
 			continue;
 		}
 		if (result == RETURN_SUCCESS)
-			printf("Test Succeded!\r\n");
+			printf("Test Succeeded!\r\n");
 		else
 			printf("Test Failed!\r\n");
-
-		print_separator();
 
 	}
 }

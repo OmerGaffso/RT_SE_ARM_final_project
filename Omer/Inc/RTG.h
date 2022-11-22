@@ -91,23 +91,17 @@ void turn_on_leds();
 /// toggle the LED states
 void toggle_leds();
 
-/// helper function that switch the current operation flag to the next
-void switch_op();
-
 /// helper function. receives 1 or 0 for every led and switching it on or off
 /// based on the values of the parameters.
 void leds(int green, int blue, int red);
-
-/// helper function that prints the message.
-void print_msg();
-
-/// helper function that checks the transmit and received message flags.
-/// returns true if both flags are true, and false otherwise.
-int check_msg_flags();
 
 /**
  * Helper function that prints a separator.
  */
 void print_separator();
 
+/**
+ * Helper function that prints newline
+ */
+void new_line();
 #endif /* INC_RTG_H_ */

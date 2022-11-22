@@ -8,22 +8,22 @@ uint8_t uart_rx_done_flag = FALSE;		// Flag to notify complete received
 /**
  * This is the main function for the UART testing.
  * The data received from server will be received initially by UART4, transmit
- * to UART2, and then transmit back to UART4 to check if the data is the same.
+ * to UART6, and then transmit back to UART4 to check if the data is the same.
  */
 uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
-	uint8_t uart2_buff[DATA_SIZE] = { 0 };		// UART2 Buffer
-	uint8_t uart4_buff[DATA_SIZE] = { 0 };		// UART4 BUFFER
+	uint8_t uart_master_buff[DATA_SIZE] = { 0 };		// UART2 Buffer
+	uint8_t uart_slave_buff[DATA_SIZE] = { 0 };		// UART4 BUFFER
 	uint8_t result = RETURN_SUCCESS;
 
 	for(uint8_t i = 0; i < iter; i++)
 	{
-		uart_transmit_receive(UART_4, UART_2, data_length, data, uart2_buff);
+		uart_transmit_receive(UART_SLAVE, UART_MASTER, data_length, data, uart_master_buff);
 		uart_delay_till_received();
-		uart_transmit_receive(UART_2, UART_4, data_length, uart2_buff, uart4_buff);
+		uart_transmit_receive(UART_MASTER, UART_SLAVE, data_length, uart_master_buff, uart_slave_buff);
 		uart_delay_till_received();
 
-		if(strncmp((char *)uart4_buff, (char *)data, data_length) != 0)
+		if(strncmp((char *)uart_slave_buff, (char *)data, data_length) != 0)
 		{
 			result = RETURN_FAILURE;
 			return result;
@@ -63,14 +63,14 @@ void uart_delay_till_received()
 /// Enters here upon completed UART receive.
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart == UART_2 || huart == UART_4)
+	if (huart == UART_MASTER || huart == UART_SLAVE)
 		uart_rx_done_flag = TRUE;
 }
 
 /// Enters here upon complete UART transmit.
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart == UART_2 || huart == UART_4)
+	if (huart == UART_MASTER || huart == UART_SLAVE)
 		uart_tx_done_flag = TRUE;
 }
 

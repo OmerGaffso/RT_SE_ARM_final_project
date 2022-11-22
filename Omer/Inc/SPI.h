@@ -10,8 +10,12 @@ extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi4;
 
 /// SPI handles
-#define SPI_1 &hspi1					//SPI Master
-#define SPI_4 &hspi4					//SPI Slave
+#define SPI_MASTER &hspi1					//SPI Master
+#define SPI_SLAVE &hspi4					//SPI Slave
+
+/// CS PIN
+#define CS_MASTER_PER GPIOA					//Master Peripheral
+#define CS_MASTER_PIN GPIO_PIN_4			//Master Pin Number
 
 /**
  * This is the main function for the SPI testing.

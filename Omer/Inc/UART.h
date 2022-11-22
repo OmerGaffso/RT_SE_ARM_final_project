@@ -7,17 +7,17 @@
 #define RTG_ARM_PROJECT_UART
 
 /// Extern UART Handles
-extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart6;
 
 /// UART handles
-#define UART_2 &huart2					//UART2 Handle
-#define UART_4 &huart4					//UART2 Handle
+#define UART_MASTER &huart4					//UART4 Handle
+#define UART_SLAVE &huart6					//UART6 Handle
 
 /**
  * This is the main function for the UART testing.
  * The data received from server will be received initially by UART4, transmit
- * to UART2, and then transmit back to UART4 to check if the data is the same.
+ * to UART6, and then transmit back to UART4 to check if the data is the same.
  * @param iter - number of iteration for the test
  * @param data_length - the length of string to transmit and receive
  * @param data - the string data to transmit and receive
