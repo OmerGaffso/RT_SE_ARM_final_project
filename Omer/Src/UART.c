@@ -13,17 +13,17 @@ uint8_t uart_rx_done_flag = FALSE;		// Flag to notify complete received
 uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
 	uint8_t uart_master_buff[DATA_SIZE] = { 0 };		// UART2 Buffer
-	uint8_t uart_slave_buff[DATA_SIZE] = { 0 };		// UART4 BUFFER
+	uint8_t uart_slave_buff[DATA_SIZE] = { 0 };			// UART4 BUFFER
 	uint8_t result = RETURN_SUCCESS;
 
 	for(uint8_t i = 0; i < iter; i++)
 	{
-		uart_transmit_receive(UART_SLAVE, UART_MASTER, data_length, data, uart_master_buff);
+		uart_transmit_receive(UART_MASTER, UART_SLAVE, data_length, data, uart_slave_buff);
 		uart_delay_till_received();
-		uart_transmit_receive(UART_MASTER, UART_SLAVE, data_length, uart_master_buff, uart_slave_buff);
+		uart_transmit_receive(UART_SLAVE, UART_MASTER, data_length, uart_slave_buff, uart_master_buff);
 		uart_delay_till_received();
 
-		if(strncmp((char *)uart_slave_buff, (char *)data, data_length) != 0)
+		if(strncmp((char *)uart_master_buff, (char *)data, data_length) != 0)
 		{
 			result = RETURN_FAILURE;
 			return result;

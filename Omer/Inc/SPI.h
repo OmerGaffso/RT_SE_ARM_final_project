@@ -27,7 +27,9 @@ extern SPI_HandleTypeDef hspi4;
  */
 uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data);
 
-void spi_init_receive(int data_length); //TODO add desc
+void spi_init_receive(	uint8_t *receive_buff_1,
+						uint8_t *receive_buff_2,
+						uint8_t data_length		); //TODO add desc
 
 /**
  * This function will transmit data form SPI master to SPI slave.
@@ -39,7 +41,9 @@ void spi_init_receive(int data_length); //TODO add desc
  */
 void spi_transmit_to_slave(	SPI_HandleTypeDef *spi_transmit,
 							SPI_HandleTypeDef *spi_receive,
-							uint8_t data_length);
+							uint8_t data_length,
+							uint8_t *transmit_buff,
+							uint8_t *receive_buff);
 
 /**
  * This function will transmit data form SPI slave to SPI master.
@@ -51,7 +55,14 @@ void spi_transmit_to_slave(	SPI_HandleTypeDef *spi_transmit,
  */
 void spi_transmit_to_master(SPI_HandleTypeDef *spi_transmit,
 							SPI_HandleTypeDef *spi_receive,
-							uint8_t data_length);
+							uint8_t data_length,
+							uint8_t *transmit_buff,
+							uint8_t *receive_buff);
+
+/**
+ *
+ */
+void reset_buff();
 
 /**
  *  Uses while loop to delay the program until enters HAL_SPI_TxCpltCallback
