@@ -8,8 +8,6 @@
 /// Extern SPI HANDLES
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi4;
-extern SPI_HandleTypeDef hspi5;
-
 
 /// SPI handles
 #define SPI_MASTER &hspi1			//SPI Master
@@ -22,7 +20,7 @@ extern SPI_HandleTypeDef hspi5;
 /// test condition.
 #define CORRECT_CALLBACK_CNT 2
 
-/** TODO - EDIT desc!
+/**
  * This is the main function for the SPI testing.
  * The data received from server will be received initially by SPI1, transmit
  * to SPI4, and then transmit back to SPI1 to check if the data is the same.
@@ -62,6 +60,6 @@ void spi_transmit_to_master(uint8_t data_length);
  * @param data_length - the length of the data.
  * @return TRUE (1) if checks passed, FALSE (0) otherwise.
  */
-uint8_t test_conditions(uint8_t data_length ,uint8_t *data);
+uint8_t spi_test_conditions(uint8_t data_length ,uint8_t *data);
 
 #endif

@@ -60,10 +60,11 @@ extern UART_HandleTypeDef huart3;
 
 // GENERAL DEFINITIONS:
 //Max size of data for UDP received string
-#define DATA_SIZE 255
+#define DATA_SIZE 256
 #define TIMEOUT_TIME 100				//Timeout for UART TRANSMIT
 #define DELAY_TIME 500					//Delay time for end of loop
-#define INIT_VALUE 0					//Initiation value for counters and pin connected flag
+//Initiation value for counters and pin connected flag
+#define INIT_VALUE 0
 #define OP_UART 0						//UART operation code
 #define OP_I2C 1						//I2C operation code
 #define OP_SPI 2						//SPI operation code

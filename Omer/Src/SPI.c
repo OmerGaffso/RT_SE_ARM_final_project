@@ -2,30 +2,27 @@
 #include "SPI.h"
 
 /// Buffers
-uint8_t master_buff[DATA_SIZE]; 	// init the buffer to be full '\0'
-uint8_t slave_buff[DATA_SIZE]; 		// init the buffer to be full '\0'
+uint8_t master_buff[DATA_SIZE];
+uint8_t slave_buff[DATA_SIZE];
 
 uint8_t master_tx_rx_cnt = INIT_VALUE;		// count callback calls for master
 uint8_t slave_tx_rx_cnt = INIT_VALUE;		// count callback calls for slave
 
 /**
  * This is the main function for the SPI testing.
- * The data received from server will be received initially by SPI1, transmit
- * to SPI4, and then transmit back to SPI1 to check if the data is the same.
- * @param iter - number of iteration for the test
- * @param data_length - the length of string to transmit and receive
- * @param data - the string data to transmit and receive
- * @return 0x01 if the tests passed successfully, or 0xff if tests failed.
  */
 uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
 	for(uint8_t i = 0; i < iter ; i++)
 	{
+		// transmit from master to slave
 		spi_transmit_to_slave(data_length, data);
 
+		// transmit from slave to master
 		spi_transmit_to_master(data_length);
 
-		if (!test_conditions(data_length,data))
+		// test received data equals to original data
+		if (!spi_test_conditions(data_length, data))
 		{
 			return FAILURE;
 		}
@@ -83,7 +80,7 @@ void spi_transmit_to_master(uint8_t data_length)
  * Checks that the transmitted/received data is the same as the original
  * data, and that the data was actually sent during spi_test run.
  */
-uint8_t test_conditions(uint8_t data_length, uint8_t *data)
+uint8_t spi_test_conditions(uint8_t data_length, uint8_t *data)
 {
 	if ( strncmp((char *)master_buff, (char *)data, data_length) != 0 )
 	{

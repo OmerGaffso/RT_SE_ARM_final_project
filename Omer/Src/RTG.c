@@ -9,13 +9,13 @@ void rtg_main()
 	uint8_t result;
 	while(TRUE)
 	{
-//		if(flag_uart3_rx)
-//		{
-
-//		}
 
 		print_separator();
-		printf("Please enter a communication protocol name:(U/I/S)\r\n");
+		printf("PLEASE CHOOSE TEST TO RUN:\r\n");
+		printf("(u)art\r\n");
+		printf("(s)pi\r\n");
+		printf("(i)2c\r\n");
+		printf("(a)dc\r\n");
 		scanf("%c", &choice);
 		choice = tolower(choice);
 		new_line();
@@ -30,6 +30,9 @@ void rtg_main()
 			break;
 		case 's':
 			result = spi_test(5,3,(uint8_t*)"abc");
+			break;
+		case 'a':
+			result = adc_test(5);
 			break;
 		default:
 			printf("\r\nPlease input a valid option (U/I/S).\r\n");
