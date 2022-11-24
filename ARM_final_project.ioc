@@ -1,18 +1,18 @@
 #MicroXplorer Configuration settings - do not modify
 ADC2.Channel-0\#ChannelRegularConversion=ADC_CHANNEL_0
-ADC2.ClockPrescaler=ADC_CLOCK_SYNC_PCLK_DIV8
+ADC2.ClockPrescaler=ADC_CLOCK_SYNC_PCLK_DIV2
 ADC2.ContinuousConvMode=DISABLE
 ADC2.DMAContinuousRequests=ENABLE
 ADC2.IPParameters=Rank-0\#ChannelRegularConversion,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,NbrOfConversionFlag,ClockPrescaler,ContinuousConvMode,DMAContinuousRequests
 ADC2.NbrOfConversionFlag=1
 ADC2.Rank-0\#ChannelRegularConversion=1
-ADC2.SamplingTime-0\#ChannelRegularConversion=ADC_SAMPLETIME_84CYCLES
+ADC2.SamplingTime-0\#ChannelRegularConversion=ADC_SAMPLETIME_3CYCLES
 Dma.ADC2.12.Direction=DMA_PERIPH_TO_MEMORY
 Dma.ADC2.12.FIFOMode=DMA_FIFOMODE_DISABLE
 Dma.ADC2.12.Instance=DMA2_Stream3
 Dma.ADC2.12.MemDataAlignment=DMA_MDATAALIGN_HALFWORD
 Dma.ADC2.12.MemInc=DMA_MINC_ENABLE
-Dma.ADC2.12.Mode=DMA_NORMAL
+Dma.ADC2.12.Mode=DMA_CIRCULAR
 Dma.ADC2.12.PeriphDataAlignment=DMA_PDATAALIGN_HALFWORD
 Dma.ADC2.12.PeriphInc=DMA_PINC_DISABLE
 Dma.ADC2.12.Priority=DMA_PRIORITY_LOW

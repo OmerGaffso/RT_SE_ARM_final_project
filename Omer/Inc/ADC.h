@@ -30,14 +30,6 @@ extern ADC_HandleTypeDef hadc2;
  */
 uint8_t adc_test(uint8_t iter);
 
-/**
- * Checks that the ConvCpltCallback was called (turn on the adc_complete flag),
- * and that the value read is in accepted range.
- * @param adc_read - the value that was read during the loop iteration
- * @return TRUE (1) if the conditions passed, FALSE (0) if one of the conditions
- * failed.
- */
-uint8_t adc_test_conditions(uint32_t adc_read);
 
 
 #endif

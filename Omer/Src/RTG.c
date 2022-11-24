@@ -2,6 +2,7 @@
 #include "UART.h"
 #include "I2C.h"
 #include "SPI.h"
+#include "ADC.h"
 
 void rtg_main()
 {
