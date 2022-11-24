@@ -14,7 +14,7 @@ uint8_t i2c_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
 	uint8_t i2c2_buff[DATA_SIZE] = { 0 }; // init the buffer to be full '\0'
 	uint8_t i2c4_buff[DATA_SIZE] = { 0 }; // init the buffer to be full '\0'
-	uint8_t result = RETURN_SUCCESS;
+	uint8_t result = SUCCESS;
 
 	for(uint8_t i = 0; i < iter ; i++)
 	{
@@ -25,7 +25,7 @@ uint8_t i2c_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 
 		if(strncmp((char *)i2c2_buff, (char *)data, data_length) != 0)
 		{
-			result = RETURN_FAILURE;
+			result = FAILURE;
 			return result;
 		}
 	}

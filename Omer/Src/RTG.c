@@ -35,7 +35,7 @@ void rtg_main()
 			printf("\r\nPlease input a valid option (U/I/S).\r\n");
 			continue;
 		}
-		if (result == RETURN_SUCCESS)
+		if (result == SUCCESS)
 			printf("Test Succeeded!\r\n");
 		else
 			printf("Test Failed!\r\n");

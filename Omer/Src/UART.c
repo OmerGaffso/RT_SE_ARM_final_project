@@ -14,7 +14,7 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
 	uint8_t uart_master_buff[DATA_SIZE] = { 0 };		// UART2 Buffer
 	uint8_t uart_slave_buff[DATA_SIZE] = { 0 };			// UART4 BUFFER
-	uint8_t result = RETURN_SUCCESS;
+	uint8_t result = SUCCESS;
 
 	for(uint8_t i = 0; i < iter; i++)
 	{
@@ -25,7 +25,7 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 
 		if(strncmp((char *)uart_master_buff, (char *)data, data_length) != 0)
 		{
-			result = RETURN_FAILURE;
+			result = FAILURE;
 			return result;
 		}
 	}

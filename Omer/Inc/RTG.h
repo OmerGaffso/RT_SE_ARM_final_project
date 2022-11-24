@@ -73,8 +73,8 @@ extern UART_HandleTypeDef huart3;
 #define FALSE 0
 
 // TEST_RETURNS:
-#define RETURN_SUCCESS 0x01				//The test ended successfully
-#define RETURN_FAILURE 0xff				//The test ended in failure
+#define SUCCESS 0x01				//The test ended successfully
+#define FAILURE 0xff				//The test ended in failure
 
 // FUNCTIONS:
 
