@@ -9,6 +9,11 @@ void rtg_main()
 	uint8_t result;
 	while(TRUE)
 	{
+//		if(flag_uart3_rx)
+//		{
+
+//		}
+
 		print_separator();
 		printf("Please enter a communication protocol name:(U/I/S)\r\n");
 		scanf("%c", &choice);

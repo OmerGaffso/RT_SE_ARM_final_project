@@ -388,7 +388,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     __HAL_LINKDMA(hspi,hdmarx,hdma_spi1_rx);
 
     /* SPI1_TX Init */
-    hdma_spi1_tx.Instance = DMA2_Stream3;
+    hdma_spi1_tx.Instance = DMA2_Stream5;
     hdma_spi1_tx.Init.Channel = DMA_CHANNEL_3;
     hdma_spi1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_spi1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
@@ -422,12 +422,12 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
 
     __HAL_RCC_GPIOE_CLK_ENABLE();
     /**SPI4 GPIO Configuration
-    PE11     ------> SPI4_NSS
-    PE12     ------> SPI4_SCK
-    PE13     ------> SPI4_MISO
-    PE14     ------> SPI4_MOSI
+    PE2     ------> SPI4_SCK
+    PE4     ------> SPI4_NSS
+    PE5     ------> SPI4_MISO
+    PE6     ------> SPI4_MOSI
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14;
+    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -526,12 +526,12 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     __HAL_RCC_SPI4_CLK_DISABLE();
 
     /**SPI4 GPIO Configuration
-    PE11     ------> SPI4_NSS
-    PE12     ------> SPI4_SCK
-    PE13     ------> SPI4_MISO
-    PE14     ------> SPI4_MOSI
+    PE2     ------> SPI4_SCK
+    PE4     ------> SPI4_NSS
+    PE5     ------> SPI4_MISO
+    PE6     ------> SPI4_MOSI
     */
-    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14);
+    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6);
 
     /* SPI4 DMA DeInit */
     HAL_DMA_DeInit(hspi->hdmarx);
@@ -714,7 +714,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     __HAL_LINKDMA(huart,hdmarx,hdma_usart6_rx);
 
     /* USART6_TX Init */
-    hdma_usart6_tx.Instance = DMA2_Stream6;
+    hdma_usart6_tx.Instance = DMA2_Stream7;
     hdma_usart6_tx.Init.Channel = DMA_CHANNEL_5;
     hdma_usart6_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_usart6_tx.Init.PeriphInc = DMA_PINC_DISABLE;

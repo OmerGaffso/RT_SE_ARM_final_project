@@ -426,20 +426,6 @@ void DMA2_Stream2_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles DMA2 stream3 global interrupt.
-  */
-void DMA2_Stream3_IRQHandler(void)
-{
-  /* USER CODE BEGIN DMA2_Stream3_IRQn 0 */
-
-  /* USER CODE END DMA2_Stream3_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_spi1_tx);
-  /* USER CODE BEGIN DMA2_Stream3_IRQn 1 */
-
-  /* USER CODE END DMA2_Stream3_IRQn 1 */
-}
-
-/**
   * @brief This function handles DMA2 stream4 global interrupt.
   */
 void DMA2_Stream4_IRQHandler(void)
@@ -454,17 +440,31 @@ void DMA2_Stream4_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles DMA2 stream6 global interrupt.
+  * @brief This function handles DMA2 stream5 global interrupt.
   */
-void DMA2_Stream6_IRQHandler(void)
+void DMA2_Stream5_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA2_Stream6_IRQn 0 */
+  /* USER CODE BEGIN DMA2_Stream5_IRQn 0 */
 
-  /* USER CODE END DMA2_Stream6_IRQn 0 */
+  /* USER CODE END DMA2_Stream5_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_spi1_tx);
+  /* USER CODE BEGIN DMA2_Stream5_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream5_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream7 global interrupt.
+  */
+void DMA2_Stream7_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream7_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart6_tx);
-  /* USER CODE BEGIN DMA2_Stream6_IRQn 1 */
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 1 */
 
-  /* USER CODE END DMA2_Stream6_IRQn 1 */
+  /* USER CODE END DMA2_Stream7_IRQn 1 */
 }
 
 /**
