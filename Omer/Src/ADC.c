@@ -20,9 +20,3 @@ uint8_t adc_test(uint8_t iter)
 	return SUCCESS;
 }
 
-
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-	if ( hadc == ADC_HANDLE )
-		adc_complete = TRUE;
-}
