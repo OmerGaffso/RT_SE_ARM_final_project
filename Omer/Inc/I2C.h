@@ -1,7 +1,18 @@
 /**
+ * @author Omer Penso
+ *
  * This file will be responsible for all I2C definitions and functions.
- * The I2C will work in interrupt mode (no DMA) because of DMA hardware
- * limitations on the stm32f746zg.
+ *
+ *	 			---I2C---
+ * I2C1 - PB9 SDA
+ * I2C1 - PB8 SCL
+ * 					TX DMA1 Stream 6
+ * 					RX DMA1 Stream 0
+ *
+ * I2C2 - PF0 SDA
+ * I2C2 - PF1 SCL
+ *					TX DMA1 Stream 7
+ *					RX DMA1 Stream 3
  */
 
 #ifndef RTG_ARM_PROJECT_I2C
@@ -14,7 +25,7 @@ extern I2C_HandleTypeDef hi2c2;
 /// I2C handles
 #define I2C_MASTER &hi2c2					//I2C Master
 #define I2C_SLAVE &hi2c1					//I2C Slave
-#define SLAVE_ADDR 44						//Slave address
+#define SLAVE_ADDR 14U						//Slave address
 
 /**
  * This is the main function for the I2C testing.

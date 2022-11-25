@@ -21,7 +21,8 @@ uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 		// transmit from slave to master
 		spi_transmit_to_master(data_length);
 
-		// test received data equals to original data
+		// test received data equals to original data and callback counters
+		// reached expected count
 		if (!spi_test_conditions(data_length, data))
 		{
 			return FAILURE;

@@ -23,7 +23,10 @@ uint8_t adc_test(uint8_t iter)
 		if ( adc_read < LOWER_BOUND || UPPER_BOUND < adc_read )
 			return FAILURE;
 	}
-	if(convert_cnt != iter)
+
+	/// If the counter is smaller than the number of iterations, we missed some
+	/// readings. Might mean we have an hardware problem.
+	if(convert_cnt < iter)
 		return FAILURE;
 
 	return SUCCESS;

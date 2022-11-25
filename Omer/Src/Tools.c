@@ -1,3 +1,11 @@
+/**
+ * @author Omer Penso
+ *
+ * TODO - Think if you have a need for this file. if you do, delete the printf
+ * and scanf function (they are not required in this project).
+ * This file contains general functions used for debugging.
+ */
+
 #include "RTG.h"
 
 // printf
@@ -43,40 +51,4 @@ void new_line()
 void print_separator()
 {
 	printf("---------------------------------\r\n");
-}
-
-void toggle_leds()
-{
-	static int state = FALSE;
-	if (state)
-	{
-		turn_off_leds();
-		state = FALSE;
-	}
-	else
-	{
-		turn_on_leds();
-		state = TRUE;
-	}
-}
-
-void leds(int green, int blue, int red)
-{
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_1, green);
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_2, blue);
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_3, red);
-}
-
-void turn_on_leds()
-{
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_1, GPIO_PIN_UP);
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_2, GPIO_PIN_UP);
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_3, GPIO_PIN_UP);
-}
-
-void turn_off_leds()
-{
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_1, GPIO_PIN_DOWN);
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_2, GPIO_PIN_DOWN);
-	HAL_GPIO_WritePin(GPIO_LED_PER, GPIO_LED_3, GPIO_PIN_DOWN);
 }

@@ -1,5 +1,15 @@
 /**
+ * @author Omer Penso
+ *
  * This file will be responsible for all ADC definitions and functions.
+ * The ADC DMA configured as circular so the DMA will continue to read the
+ * next value after the buffer was filled (will replace the value that is in
+ * the buffer with new one).
+ *
+ * 				---ADC---
+ * PA0, connected to 3.3 volt pin
+ * DMA2 Stream 3
+ *
  */
 
 #ifndef RTG_ARM_PROJECT_ADC

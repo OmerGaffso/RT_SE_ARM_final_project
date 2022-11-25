@@ -3,6 +3,7 @@
 #include "I2C.h"
 #include "SPI.h"
 #include "ADC.h"
+#include "TIMER.h"
 
 void rtg_main()
 {
@@ -17,6 +18,7 @@ void rtg_main()
 		printf("(s)pi\r\n");
 		printf("(i)2c\r\n");
 		printf("(a)dc\r\n");
+		printf("(t)imer\r\n");
 		scanf("%c", &choice);
 		choice = tolower(choice);
 		new_line();
@@ -34,6 +36,9 @@ void rtg_main()
 			break;
 		case 'a':
 			result = adc_test(5);
+			break;
+		case 't':
+			result = timer_test(5);
 			break;
 		default:
 			printf("\r\nPlease input a valid option (U/I/S).\r\n");

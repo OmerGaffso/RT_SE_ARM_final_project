@@ -34,5 +34,6 @@
 "./Omer/Src/I2C.o"
 "./Omer/Src/RTG.o"
 "./Omer/Src/SPI.o"
+"./Omer/Src/TIMER.o"
 "./Omer/Src/Tools.o"
 "./Omer/Src/UART.o"

@@ -1,5 +1,22 @@
 /**
+ * @author Omer Penso
+ *
  * This file will be responsible for all SPI definitions and functions.
+ *
+ * 				---SPI---
+ * SPI1_SCK - PB3
+ * SPI1_MOSI - PB5
+ * SPI1_MISO - PB4
+ * SPI1_CS - PA4
+ * 					TX DMA2 Stream 5
+ * 					RX DMA2 Stream 2
+ * SPI4_SCK - PE2
+ * SPI4_MOSI - PE6
+ * SPI4_MISO - PE5
+ * SPI4_CS - PE4
+ *					TX DMA2 Stream 4
+ *					RX DMA2 Stream 0
+ *
  */
 
 #ifndef RTG_ARM_PROJECT_SPI
@@ -16,9 +33,8 @@ extern SPI_HandleTypeDef hspi4;
 #define CS_PER GPIOA				//CS configured to per A
 #define CS_PIN GPIO_PIN_4			//CS configured to pin 4
 
-/// Used to check that entered the callback correct number of times before
-/// test condition.
-#define CORRECT_CALLBACK_CNT 2
+/// Used to check that entered the callback correct number of times.
+#define CORRECT_CALLBACK_CNT 2U
 
 /**
  * This is the main function for the SPI testing.

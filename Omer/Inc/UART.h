@@ -1,6 +1,15 @@
 /**
+ * @author Omer Penso
+ *
  * This file will be responsible for all UART definitions and functions.
  * The UART will work with DMA when transmitting or receiving.
+ *
+ *		 ---UART---
+ * UART4_TX PC10 DMA1 Stream 4
+ * UART4_RX PC11 DMA1 Stream 2
+ * UART6_TX	PC6  DMA2 Stream 7
+ * UART6_RX	PC7  DMA2 Stream 1
+ *
  */
 
 #ifndef RTG_ARM_PROJECT_UART
