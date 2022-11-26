@@ -1,4 +1,6 @@
 #include "RTG.h"
+#include "lwip.h"
+#include "UDP.h"
 #include "UART.h"
 #include "I2C.h"
 #include "SPI.h"
@@ -7,48 +9,52 @@
 
 void rtg_main()
 {
-	char choice;
-	uint8_t result;
+
+	udpServer_init();				//Init UDP server
 	while(TRUE)
 	{
-
-		print_separator();
-		printf("PLEASE CHOOSE TEST TO RUN:\r\n");
-		printf("(u)art\r\n");
-		printf("(s)pi\r\n");
-		printf("(i)2c\r\n");
-		printf("(a)dc\r\n");
-		printf("(t)imer\r\n");
-		scanf("%c", &choice);
-		choice = tolower(choice);
-		new_line();
-
-		switch(choice)
-		{
-		case 'u':
-			result = uart_test(5,3,(uint8_t*)"abc");
-			break;
-		case 'i':
-			result = i2c_test(5,3,(uint8_t*)"abc");
-			break;
-		case 's':
-			result = spi_test(5,3,(uint8_t*)"abc");
-			break;
-		case 'a':
-			result = adc_test(5);
-			break;
-		case 't':
-			result = timer_test(5);
-			break;
-		default:
-			printf("\r\nPlease input a valid option (U/I/S).\r\n");
-			continue;
-		}
-		if (result == SUCCESS)
-			printf("Test Succeeded!\r\n");
-		else
-			printf("Test Failed!\r\n");
-
+		//Handles the actual reception of bytes from the network interface
+		ethernetif_input(&gnetif);
+		sys_check_timeouts();		//checks timeout expiration
 	}
+}
+
+
+uint8_t send_to_test(packet_t *test_packet)
+{
+	uint8_t test_result;
+	switch (test_packet->test_per)
+	{
+		case(TIMER_TEST):
+			test_result = timer_test(test_packet->test_iter);
+			break;
+
+		case(UART_TEST):
+			test_result = uart_test(test_packet->test_iter,
+									test_packet->test_bitfield_len,
+									(char*)test_packet->test_bitfield_data);
+			break;
+
+		case(SPI_TEST):
+			test_result = spi_test( test_packet->test_iter,
+									test_packet->test_bitfield_len,
+									(char*)test_packet->test_bitfield_data);
+			break;
+
+		case(I2C_TEST):
+			test_result = uart_test(test_packet->test_iter,
+									test_packet->test_bitfield_len,
+									(char*)test_packet->test_bitfield_data);
+			break;
+		case(ADC_TEST):
+			test_result = adc_test(test_packet->test_iter);
+			break;
+
+		// in case of invalid test, return failure.
+		default:
+			test_result = FAILURE;
+			break;
+	}
+	return test_result;
 }
 
