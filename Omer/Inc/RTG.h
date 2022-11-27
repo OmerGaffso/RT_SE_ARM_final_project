@@ -45,6 +45,7 @@ extern struct netif gnetif;
 #define SUCCESS 0x01					//The test ended successfully
 #define FAILURE 0xff					//The test ended in failure
 
+#define SECOND_IN_MILLISECONS 1000U // Timeout
 
 /**
  * The packet received from client, separated to fields
@@ -74,13 +75,4 @@ void rtg_main();
  */
 uint8_t send_to_test(packet_t *test_packet);
 
-/**
- * Helper function that prints a separator.
- */
-void print_separator();
-
-/**
- * Helper function that prints newline
- */
-void new_line();
-#endif /* INC_RTG_H_ */
+#endif

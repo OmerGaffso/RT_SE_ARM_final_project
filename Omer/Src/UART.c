@@ -58,14 +58,24 @@ void uart_transmit_receive(	UART_HandleTypeDef *uart_transmit,
 /// Delay until enters HAL_UART_TxCpltCallback changes flag to true
 void uart_delay_till_transmited()
 {
-	while(uart_tx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases) can use macro from timer as general timeout
+	uint32_t tickstart = HAL_GetTick();
+	while(uart_tx_done_flag != TRUE)
+	{
+		if(HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
+			break;
+	}
 	uart_tx_done_flag = FALSE;
 }
 
 /// Delay until enters HAL_UART_Rx_CpltCallback changes flag to true
 void uart_delay_till_received()
 {
-	while(uart_rx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases) can use macro from timer as general timeout
+	uint32_t tickstart = HAL_GetTick();
+	while(uart_rx_done_flag != TRUE)
+	{
+		if(HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
+			break;
+	}
 	uart_rx_done_flag = FALSE;
 }
 

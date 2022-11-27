@@ -64,14 +64,24 @@ void i2c_transmit_to_master(I2C_HandleTypeDef *i2c_transmit,
 /// Delay until enters HAL_I2C_TxCpltCallback changes flag to true
 void i2c_delay_till_transmited()
 {
-	while(i2c_tx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases) can use macro from timer as general timeout
+	uint32_t tickstart = HAL_GetTick();
+	while(i2c_tx_done_flag != TRUE)
+	{
+		if (HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
+			break;
+	}
 	i2c_tx_done_flag = FALSE;
 }
 
 /// Delay until enters HAL_I2C_Rx_CpltCallback changes flag to true
 void i2c_delay_till_received()
 {
-	while(i2c_rx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases) can use macro from timer as general timeout
+	uint32_t tickstart = HAL_GetTick();
+	while(i2c_rx_done_flag != TRUE)
+	{
+		if (HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
+			break;
+	}
 	i2c_rx_done_flag = FALSE;
 }
 

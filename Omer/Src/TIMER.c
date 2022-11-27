@@ -34,10 +34,10 @@ uint8_t timer_test(uint8_t iter)
  */
 void count_1_second(uint32_t tickstart)
 {
-	while(HAL_GetTick() - tickstart < SECOND_IN_MILLISECONS + TIMER_DEVIEATION);
+	while(HAL_GetTick() - tickstart < TIMER_DELAY);
 }
 
-
+// Enters here after 1 second has passed.
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	second_passed = TRUE;

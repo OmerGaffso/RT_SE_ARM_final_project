@@ -7,21 +7,15 @@
 #include "UDP.h"
 #include "stdio.h"
 
-
-/* IMPLEMENTATION FOR UDP Server :   source:https://www.geeksforgeeks.org/udp-server-client-implementation-c/
-
-1. Create UDP socket.
-2. Bind the socket to server address.
-3. Wait until datagram packet arrives from client.
-4. Process the datagram packet and send a reply to client.
-5. Go back to Step 3.
-*/
 void udp_receive_callback(	void *arg,
 							struct udp_pcb *upcb,
 							struct pbuf *p,
 							const ip_addr_t *addr,
 							u16_t port);
 
+/**
+ * Initiate the UDP server
+ */
 void udpServer_init()
 {
 	// UDP Control Block structure
@@ -49,11 +43,10 @@ void udpServer_init()
    }
 }
 
-// udp_receive_callback will be called, when the client sends some data to the server
-/* 4. Process the datagram packet and send a reply to client. */
-
-
-
+/**
+ * udp_receive_callback will be called, when the client sends some data to the
+ * server. it will
+ */
 void udp_receive_callback(
 		void *arg,
 		struct udp_pcb *upcb,
@@ -65,28 +58,31 @@ void udp_receive_callback(
 	if (p->len == 0 || p->payload == NULL)
 		return;
 
-//	*client_ip_addr = *addr;	//saving the client ip address for
 	struct pbuf *txBuf;			//the packet we construct to return to client
 	char buf[REPLY_BUFF_LEN];	//the buffer that contains the data to return
 	uint8_t test_result;
 	/* struct to store the packet data based on test fields */
 	packet_t rec_packet;
-	/* pointer for coping the data from the received packet into the packet
-	struct */
 
 	char *payload_data;
 	payload_data = p->payload;
 
+	// copy the test id to the packet struct
 	memcpy(&rec_packet.test_id, payload_data, ID_LEN);
-	payload_data += ID_LEN;
+	payload_data += ID_LEN;	// advances the payload pointer to the next field
+	// copy the test peripheral code into the packet struct
 	memcpy(&rec_packet.test_per, payload_data++, CONTROL_FIELD_LEN);
+	// copy the test iteration number into the packet struct
 	memcpy(&rec_packet.test_iter,payload_data++, CONTROL_FIELD_LEN);
+	// copy the test bitfield length into the packet struct
 	memcpy(&rec_packet.test_bitfield_len,payload_data++, CONTROL_FIELD_LEN);
+	// copy the test bitfield data into the packet struct
 	memcpy(&rec_packet.test_bitfield_data, payload_data, DATA_SIZE);
 
 	free(p);
+	free(payload_data);
 
-    /* send the packet_t var to the tests fucntion */
+    /* send the packet struct to the tests fucntion */
 	test_result = send_to_test(&rec_packet);
     /* copy id to the first 4 bytes in the result buf */
 	memcpy(buf, rec_packet.test_id, ID_LEN);

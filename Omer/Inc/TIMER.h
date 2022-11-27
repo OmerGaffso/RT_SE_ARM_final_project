@@ -13,8 +13,8 @@ extern TIM_HandleTypeDef htim3;
 // Timer handle
 #define TIMER &htim3
 
-#define SECOND_IN_MILLISECONS 1000U
 #define TIMER_DEVIEATION 10U
+#define TIMER_DELAY SECOND_IN_MILLISECONS + TIMER_DEVIEATION
 
 /**
  * This is the main function of timer test.

@@ -9,17 +9,18 @@
 
 void rtg_main()
 {
-
 	udpServer_init();				//Init UDP server
 	while(TRUE)
 	{
-		//Handles the actual reception of bytes from the network interface
 		ethernetif_input(&gnetif);
 		sys_check_timeouts();		//checks timeout expiration
 	}
 }
 
-
+/**
+ * Receives the test packet structure. Based on the peripheral indicated in
+ * the packet received, runs the corresponding test.
+ */
 uint8_t send_to_test(packet_t *test_packet)
 {
 	uint8_t test_result;
