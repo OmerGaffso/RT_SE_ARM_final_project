@@ -12,15 +12,23 @@ uint8_t uart_rx_done_flag = FALSE;		// Flag to notify complete received
  */
 uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 {
-	uint8_t uart_master_buff[DATA_SIZE] = { 0 };		// UART2 Buffer
-	uint8_t uart_slave_buff[DATA_SIZE] = { 0 };			// UART4 BUFFER
+	uint8_t uart_master_buff[DATA_SIZE] = { 0 };		// UART4 Buffer
+	uint8_t uart_slave_buff[DATA_SIZE] = { 0 };			// UART6 BUFFER
 	uint8_t result = SUCCESS;
 
 	for(uint8_t i = 0; i < iter; i++)
 	{
-		uart_transmit_receive(UART_MASTER, UART_SLAVE, data_length, data, uart_slave_buff);
+		uart_transmit_receive(	UART_MASTER,
+								UART_SLAVE,
+								data_length,
+								data,
+								uart_slave_buff);
 		uart_delay_till_received();
-		uart_transmit_receive(UART_SLAVE, UART_MASTER, data_length, uart_slave_buff, uart_master_buff);
+		uart_transmit_receive(	UART_SLAVE,
+								UART_MASTER,
+								data_length,
+								uart_slave_buff,
+								uart_master_buff);
 		uart_delay_till_received();
 
 		if(strncmp((char *)uart_master_buff, (char *)data, data_length) != 0)
@@ -28,6 +36,7 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 			result = FAILURE;
 			return result;
 		}
+		uart_reset_buffers(uart_slave_buff, uart_master_buff);
 	}
 	return result;
 }
@@ -58,6 +67,15 @@ void uart_delay_till_received()
 {
 	while(uart_rx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases) can use macro from timer as general timeout
 	uart_rx_done_flag = FALSE;
+}
+
+/**
+ * This function reset the buffer to "empty" buffer (filled with zeros).
+ */
+void uart_reset_buffers(uint8_t *slave_buff, uint8_t *master_buff)
+{
+	memset(master_buff, '0', DATA_SIZE);
+	memset(slave_buff, '0', DATA_SIZE);
 }
 
 /// Enters here upon completed UART receive.

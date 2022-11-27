@@ -32,20 +32,21 @@ uint8_t send_to_test(packet_t *test_packet)
 		case(UART_TEST):
 			test_result = uart_test(test_packet->test_iter,
 									test_packet->test_bitfield_len,
-									(char*)test_packet->test_bitfield_data);
+									test_packet->test_bitfield_data);
 			break;
 
 		case(SPI_TEST):
 			test_result = spi_test( test_packet->test_iter,
 									test_packet->test_bitfield_len,
-									(char*)test_packet->test_bitfield_data);
+									test_packet->test_bitfield_data);
 			break;
 
 		case(I2C_TEST):
-			test_result = uart_test(test_packet->test_iter,
+			test_result = i2c_test(test_packet->test_iter,
 									test_packet->test_bitfield_len,
-									(char*)test_packet->test_bitfield_data);
+									test_packet->test_bitfield_data);
 			break;
+
 		case(ADC_TEST):
 			test_result = adc_test(test_packet->test_iter);
 			break;

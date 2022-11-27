@@ -84,14 +84,14 @@ void udp_receive_callback(
 	memcpy(&rec_packet.test_bitfield_len,payload_data++, CONTROL_FIELD_LEN);
 	memcpy(&rec_packet.test_bitfield_data, payload_data, DATA_SIZE);
 
-	free(payload_data);
+	free(p);
 
     /* send the packet_t var to the tests fucntion */
 	test_result = send_to_test(&rec_packet);
     /* copy id to the first 4 bytes in the result buf */
 	memcpy(buf, rec_packet.test_id, ID_LEN);
 	/* store the test result at the last index of the result buf */
-	buf[REPLY_BUFF_LEN] = (char) test_result;
+	buf[TEST_RESULT_INDEX] = (char) test_result;
 
 	/* allocate pbuf from RAM*/
 	txBuf = pbuf_alloc(PBUF_TRANSPORT,REPLY_BUFF_LEN, PBUF_RAM);

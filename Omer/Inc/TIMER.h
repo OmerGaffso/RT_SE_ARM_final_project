@@ -14,7 +14,7 @@ extern TIM_HandleTypeDef htim3;
 #define TIMER &htim3
 
 #define SECOND_IN_MILLISECONS 1000U
-#define TIMER_DEVIEATION 100U
+#define TIMER_DEVIEATION 10U
 
 /**
  * This is the main function of timer test.

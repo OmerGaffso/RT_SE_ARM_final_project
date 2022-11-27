@@ -60,4 +60,11 @@ void uart_delay_till_transmited();
  */
 void uart_delay_till_received();
 
+/**
+ * This function uses the memcpy to set the master and slave buffers to "empty"
+ * (filled with zeros) in the end of every loop iteration (iteration where the
+ * data checks passed).
+ */
+void uart_reset_buffers(uint8_t *slave_buff, uint8_t *master_buff);
+
 #endif

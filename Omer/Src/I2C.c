@@ -28,6 +28,7 @@ uint8_t i2c_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 			result = FAILURE;
 			return result;
 		}
+		i2c_reset_buffers(i2c4_buff, i2c2_buff);
 	}
 	return result;
 }
@@ -72,6 +73,15 @@ void i2c_delay_till_received()
 {
 	while(i2c_rx_done_flag != TRUE);	// TODO: add timeout to loop (for hardware problem cases) can use macro from timer as general timeout
 	i2c_rx_done_flag = FALSE;
+}
+
+/**
+ * This function reset the buffer to "empty" buffer (filled with zeros).
+ */
+void i2c_reset_buffers(uint8_t *slave_buff, uint8_t *master_buff)
+{
+	memset(master_buff, '0', DATA_SIZE);
+	memset(slave_buff, '0', DATA_SIZE);
 }
 
 /// Enters here upon completed I2C master transmit

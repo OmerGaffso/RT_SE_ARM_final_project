@@ -28,7 +28,7 @@ uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 			return FAILURE;
 		}
 
-		reset_buffers();
+		spi_reset_buffers();
 		master_tx_rx_cnt = INIT_VALUE;
 		slave_tx_rx_cnt = INIT_VALUE;
 	}
@@ -38,7 +38,7 @@ uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 /**
  * This function reset the buffer to "empty" buffer (filled with zeros).
  */
-void reset_buffers()
+void spi_reset_buffers()
 {
 	memset(master_buff, '0', DATA_SIZE);
 	memset(slave_buff, '0', DATA_SIZE);

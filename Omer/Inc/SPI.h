@@ -52,7 +52,7 @@ uint8_t spi_test(uint8_t iter, uint8_t data_length, uint8_t *data);
  * (filled with zeros) in the end of every loop iteration (iteration where the
  * data checks passed).
  */
-void reset_buffers();
+void spi_reset_buffers();
 
 /**
  * This function will transmit data form SPI master to SPI slave.

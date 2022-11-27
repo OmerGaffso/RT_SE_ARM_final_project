@@ -19,6 +19,8 @@ uint8_t timer_test(uint8_t iter)
 		HAL_TIM_Base_Start_IT(TIMER);
 
 		count_1_second(tickstart);
+		HAL_TIM_Base_Stop_IT(TIMER);
+
 		if (second_passed)
 			continue;
 
@@ -38,7 +40,6 @@ void count_1_second(uint32_t tickstart)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	HAL_TIM_Base_Stop_IT(TIMER);
 	second_passed = TRUE;
 }
 
