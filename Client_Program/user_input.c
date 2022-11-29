@@ -54,7 +54,7 @@ uint8_t peripheral_choice()
 uint8_t get_iteration()
 {
     uint8_t iter;
-    printf("Enter iteration number: (256 max)\n");
+    printf("Enter iteration number: (255 max)\n");
     scanf("%hhu", &iter);
     if (iter == 0)
         return MIN_ITERATIONS;

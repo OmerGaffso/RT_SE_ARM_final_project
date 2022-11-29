@@ -1,7 +1,7 @@
 #include "RTG.h"
 #include "I2C.h"
 
-/// Flags to be used in call backs
+// Flags to be used in call backs
 uint8_t i2c_tx_done_flag = FALSE;		// Flag to notify complete transmit
 uint8_t i2c_rx_done_flag = FALSE;		// Flag to notify complete received
 
@@ -18,8 +18,10 @@ uint8_t i2c_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 
 	for(uint8_t i = 0; i < iter ; i++)
 	{
+		// transmit from I2C2 (master) to I2C1 (slave)
 		i2c_transmit_to_slave(I2C_MASTER, I2C_SLAVE, data_length, data, i2c4_buff);
 		i2c_delay_till_received();
+		// transmit from I2C1 (slave) to I2C2 (master)
 		i2c_transmit_to_master(I2C_SLAVE, I2C_MASTER, data_length, i2c4_buff, i2c2_buff);
 		i2c_delay_till_received();
 
@@ -56,7 +58,9 @@ void i2c_transmit_to_master(I2C_HandleTypeDef *i2c_transmit,
 							uint8_t *transmit_buff,
 							uint8_t *receive_buff )
 {
+	// ready the master to receive
 	HAL_I2C_Master_Receive_DMA(i2c_receive, SLAVE_ADDR, receive_buff, data_length);
+	// master waiting to receive, master transmit
 	HAL_I2C_Slave_Transmit_DMA(i2c_transmit, transmit_buff, data_length);
 	i2c_delay_till_transmited();
 }
@@ -64,9 +68,10 @@ void i2c_transmit_to_master(I2C_HandleTypeDef *i2c_transmit,
 /// Delay until enters HAL_I2C_TxCpltCallback changes flag to true
 void i2c_delay_till_transmited()
 {
+	// get the current system tick
 	uint32_t tickstart = HAL_GetTick();
 	while(i2c_tx_done_flag != TRUE)
-	{
+	{	// timeout for the case that there is an hardware fault
 		if (HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
 			break;
 	}
@@ -76,9 +81,10 @@ void i2c_delay_till_transmited()
 /// Delay until enters HAL_I2C_Rx_CpltCallback changes flag to true
 void i2c_delay_till_received()
 {
+	// get the current system tick
 	uint32_t tickstart = HAL_GetTick();
 	while(i2c_rx_done_flag != TRUE)
-	{
+	{	// timeout for the case that there is an hardware fault
 		if (HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
 			break;
 	}

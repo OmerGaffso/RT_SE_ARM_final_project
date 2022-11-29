@@ -70,12 +70,16 @@ void udp_receive(
 	// copy the test id to the packet struct
 	memcpy(&rec_packet.test_id, payload_data, ID_LEN);
 	payload_data += ID_LEN;	// advances the payload pointer to the next field
+
 	// copy the test peripheral code into the packet struct
 	memcpy(&rec_packet.test_per, payload_data++, CONTROL_FIELD_LEN);
+
 	// copy the test iteration number into the packet struct
 	memcpy(&rec_packet.test_iter,payload_data++, CONTROL_FIELD_LEN);
+
 	// copy the test bitfield length into the packet struct
 	memcpy(&rec_packet.test_bitfield_len,payload_data++, CONTROL_FIELD_LEN);
+
 	// copy the test bitfield data into the packet struct
 	memcpy(&rec_packet.test_bitfield_data, payload_data, DATA_SIZE);
 

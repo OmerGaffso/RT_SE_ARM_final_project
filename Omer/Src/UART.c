@@ -18,6 +18,7 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 
 	for(uint8_t i = 0; i < iter; i++)
 	{
+		// send from uart4 (UART master) to uart6 (UART slave)
 		uart_transmit_receive(	UART_MASTER,
 								UART_SLAVE,
 								data_length,
@@ -25,6 +26,7 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 								uart_slave_buff);
 		uart_delay_till_received();
 
+		// send from uart6 (UART slave) to uart4 (UART master)
 		uart_transmit_receive(	UART_SLAVE,
 								UART_MASTER,
 								data_length,
@@ -59,9 +61,10 @@ void uart_transmit_receive(	UART_HandleTypeDef *uart_transmit,
 /// Delay until enters HAL_UART_TxCpltCallback changes flag to true
 void uart_delay_till_transmited()
 {
+	// get the current system tick
 	uint32_t tickstart = HAL_GetTick();
 	while(uart_tx_done_flag != TRUE)
-	{
+	{	// timeout for the case that there is an hardware fault
 		if(HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
 			break;
 	}
@@ -71,9 +74,10 @@ void uart_delay_till_transmited()
 /// Delay until enters HAL_UART_Rx_CpltCallback changes flag to true
 void uart_delay_till_received()
 {
+	// get the current system tick
 	uint32_t tickstart = HAL_GetTick();
 	while(uart_rx_done_flag != TRUE)
-	{
+	{	// timeout for the case that there is an hardware fault
 		if(HAL_GetTick() - tickstart > SECOND_IN_MILLISECONS)
 			break;
 	}

@@ -40,6 +40,12 @@ extern ADC_HandleTypeDef hadc2;
  */
 uint8_t adc_test(uint8_t iter);
 
+/**
+ * Uses while loop to delay the program until enters HAL_ADC_ConvCpltCallback
+ * (changes the adc_read flag to indicate complete convert).
+ * Changes the adc_read flag back to false after the while loop ended.
+ */
+void adc_delay_till_read();
 
 
 #endif
