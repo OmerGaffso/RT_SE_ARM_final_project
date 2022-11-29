@@ -37,7 +37,7 @@ int main(void)
         if (socket_fd == ERROR)
         {
                 perror("Create socket");
-                exit(TRUE);
+                exit(ERROR);
         } // Validate the socket
 
         bzero((char *)&dest, sizeof(dest));           // Clearing the struct
@@ -49,44 +49,36 @@ int main(void)
         /************************************* Code *****************************************************/
         // get id of the next test
         next_test_id = get_id();
+        uint8_t test_mode;
         printf("Welcome to hardware test app for stm32f746zg!\n");
-        uint8_t peripheral_code;
+        
+        // uint8_t peripheral_code; //TODO:DELETE
        
         while (TRUE)
         {
-                print_test_menu();
+                // set the packet to zeros (empty)
+                memset(&packet, 0, sizeof(packet_t));
+                print_main_menu();
                 
-                // assign the test id to the packet
-                packet.test_id = next_test_id;
-                // user choice of peripheral
-                peripheral_code = peripheral_choice();
-                
-                if ( peripheral_code == EXIT )
-                        break;
-
-                // store the peripheral code in the packet
-                packet.test_peri = peripheral_code;
-                packet.test_iter = get_iteration();
-                if(     peripheral_code == CODE_UART || 
-                        peripheral_code == CODE_SPI || 
-                        peripheral_code == CODE_I2C)
-                        {
-                                printf("Enter data:\n");
-                                scanf("%s", packet.test_bitfield_data);
-                                packet.test_bitfield_len = 
-                                strlen(packet.test_bitfield_data);
-                        }
-                else 
+                // get user test mode
+                test_mode = test_mode_choice();
+                if (test_mode == AUTOMATIC)
                 {
-                        packet.test_bitfield_len = 0;
-                        memset(packet.test_bitfield_data, 0, MAX_BITFIELD_LEN);
+                        if(automated_test(&packet, next_test_id) == false)
+                                break; // user entered exit, so break loop
                 }
+                else if (test_mode == MANUAL)
+                {
+                        if (manual_test(&packet, next_test_id) == false)
+                                break;  // user entered exit, so break loop
+                }
+                else 
+                        break;  // test mode choice invalid or user entered exit
 
                 // save the time when sending the packet
                 gettimeofday(&start, 0);
                 // transmit to stm32f746zg
                 retVal = sendto(socket_fd, 
-                                // tx_buf,
                                 (const packet_t *) &packet, 
                                 sizeof(packet), 
                                 FLAG_ZERO, 
@@ -114,6 +106,8 @@ int main(void)
 
                 // get time at the end of the test (when packet returned)
                 gettimeofday(&end, 0);
+                // calculate the time passed since packet transmit until packet
+                // received back
                 double time_delta = (double)(end.tv_usec - start.tv_usec) / 
                 MILLISECONDS_CONV + (double)(end.tv_sec - start.tv_sec);
                 
@@ -126,8 +120,6 @@ int main(void)
                 next_test_id++;
                 // save the next id to use into the file
                 save_id(next_test_id);
-                // reset the packet struct for next packet
-                memset(&packet, 0, sizeof(packet_t));
                 printf("Finished test %"PRId32"\n", resv.test_id);
                 sleep(SLEEP_TIME);
                 // clears the screen

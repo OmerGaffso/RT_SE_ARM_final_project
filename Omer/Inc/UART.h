@@ -51,12 +51,14 @@ void uart_transmit_receive(	UART_HandleTypeDef *uart_transmit,
 /**
  *  Uses while loop to delay the program until enters HAL_UART_TxCpltCallback
  *  and changes tx_done_flag to true (indicates that the transmit was completed)
+ *  and change the flag state to false.
  */
 void uart_delay_till_transmited();
 
 /**
  *  Uses while loop to delay the program until enters HAL_UART_RxCpltCallback
  *  and changes rx_done_flag to true (indicates that the receive was completed)
+ *  and change the flag state to false.
  */
 void uart_delay_till_received();
 

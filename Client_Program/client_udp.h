@@ -22,14 +22,4 @@ typedef struct resv
         uint8_t test_result;
 } resv_t;
 
-// packet to send to the server 
-typedef struct packet
-{     
-        uint32_t test_id;
-        uint8_t test_peri;
-        uint8_t test_iter;
-        uint8_t test_bitfield_len;
-        char test_bitfield_data[MAX_BITFIELD_LEN];
-} packet_t;
-
 #endif

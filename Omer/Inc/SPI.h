@@ -69,13 +69,11 @@ void spi_transmit_to_slave(	uint8_t data_length,
 void spi_transmit_to_master(uint8_t data_length);
 
 /**
- * This function will check if the data received after the transmit and receive
- * is the same as the original data, and that the data actually moved during
- * the function.
- * @param data - the original data that was received from the packet.
- * @param data_length - the length of the data.
- * @return TRUE (1) if checks passed, FALSE (0) otherwise.
+ * Uses while loop to delay the program until enters HAL_SPI_TransmitReceive
+ * for both master and slave (changes their flags to indicate that they end the
+ * transmit and receive operations). Changes the master_tx_rx slave_tx_rx flags
+ * back to false after the while loop ended.
  */
-uint8_t spi_test_conditions(uint8_t data_length ,uint8_t *data);
+void spi_delay_till_tx_rx();
 
 #endif

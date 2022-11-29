@@ -7,7 +7,7 @@
 #include "UDP.h"
 #include "stdio.h"
 
-void udp_receive_callback(	void *arg,
+void udp_receive(	void *arg,
 							struct udp_pcb *upcb,
 							struct pbuf *p,
 							const ip_addr_t *addr,
@@ -35,7 +35,7 @@ void udpServer_init()
    /* 3. Set a receive callback for the upcb */
    if(err == ERR_OK)
    {
-	   udp_recv(upcb, udp_receive_callback, NULL);
+	   udp_recv(upcb, udp_receive, NULL);
    }
    else
    {
@@ -44,10 +44,10 @@ void udpServer_init()
 }
 
 /**
- * udp_receive_callback will be called, when the client sends some data to the
- * server. it will
+ * udp_receive will be called, when the client sends some data to the
+ * server.
  */
-void udp_receive_callback(
+void udp_receive(
 		void *arg,
 		struct udp_pcb *upcb,
 		struct pbuf *p,

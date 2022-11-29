@@ -3,14 +3,9 @@
 
 #include <inttypes.h>
 
-// Max size of transmit test packet
-#define TX_BUF_SIZE 263     
-// Max size of receive test packet
-#define RX_BUF_SIZE 5 
-#define ID_LEN 4                        // The test id length is 4 bytes
-#define CONTROL_FIELDS 1                // Size of control fields
-#define MAX_BITFIELD_LEN 256            // Data max length in bytes
-#define MIN_ITERATIONS 1                // Sets minimum allowed iterations
+// test mode choices
+#define AUTOMATIC 1
+#define MANUAL 2
 
 // peripheral choices
 #define TIMER 1
@@ -29,6 +24,13 @@
 #define EXIT 0
 
 /**
+ * @brief get the user choice for test mode (automated or manual)
+ * 
+ * @return uint8_t - the action code.
+ */
+uint8_t test_mode_choice();
+
+/**
  * @brief get user choice for test peripheral choice.
  * 
  * @return uint8_t - peripheral test code indicated above
@@ -41,5 +43,12 @@ uint8_t peripheral_choice();
  * @return uint8_t - the number of iterations.
  */
 uint8_t get_iteration();
+
+/**
+ * @brief Get the string data for the test packet
+ * 
+ * @param buff - the buffer to hold the data entered by the user.
+ */
+void get_bitfield_data(char *buff);
 
 #endif

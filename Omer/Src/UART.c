@@ -24,6 +24,7 @@ uint8_t uart_test(uint8_t iter, uint8_t data_length, uint8_t *data)
 								data,
 								uart_slave_buff);
 		uart_delay_till_received();
+
 		uart_transmit_receive(	UART_SLAVE,
 								UART_MASTER,
 								data_length,

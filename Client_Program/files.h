@@ -14,6 +14,8 @@
 /**
  * @brief Get the id of the next text from id_cnt.txt file before starting 
  * the main loop of the main function.
+ * If the file does not exists, create the file and save initial id value into
+ * it (0).
  * 
  * @return uint32_t - the id of the next test
  */
@@ -22,6 +24,8 @@ uint32_t get_id();
 /**
  * @brief saves the new id counter to id_cnt.txt file in the end of the loop 
  * iteration, replacing the old value.
+ * If failed to open the file, throw error and exits the program with -1
+ * code.
  * 
  * @param id - the next id for the next test
  */
@@ -31,7 +35,9 @@ void save_id(uint32_t id);
  * @brief save the test info to the file. creates a file with a name as the 
  * test id, and saves the time the test was initiated, the test id, the 
  * result of the test (1 is success, 255 is failure) and the time it took 
- * for the test to be completed and sent back to the client.
+ * for the test to be completed and sent back to the client in seconds.
+ * If failed to open the file, throw error and exits the program with -1
+ * code.
  * 
  * @param test_id - the test id received from the server after the test.
  * @param test_result - the result of the test
